@@ -1,1 +1,26 @@
+name: 🗓️ Daily Commit
+
+on:
+  schedule:
+    - cron: '0 3 * * *'   # Runs daily at 3 AM UTC (8:30 AM IST)
+  workflow_dispatch:
+
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Make a daily update
+        run: |
+          echo "Updated on: $(date)" > daily.txt
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "Sriram Bharath"
+          git config user.email "srirambharath7@gmail.com"
+          git add daily.txt
+          git commit -m "📅 Auto commit on $(date '+%Y-%m-%d')"
+          git push
 
